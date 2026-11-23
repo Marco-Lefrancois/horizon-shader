@@ -64,19 +64,31 @@ for (const old of ['ancien', 'goby']) {
   })
 }
 
-test('/look fixe et /look anime se retiennent, au repos par défaut', async ($, on) => {
+test('/look fixe et /look anime se retiennent, en marche par défaut', async ($, on) => {
   const store: Record<string, unknown> = { look: 'horizon' }
   engine(on as On, [], store)
 
   await $.session.start({ cwd: '/', surface: 'desktop', isInteractive: true })
   const before = await $.command.run({ command: 'look', args: '' } as never)
-  const anime = await $.command.run({ command: 'look', args: 'anime' } as never)
   const fixe = await $.command.run({ command: 'look', args: 'fixe' } as never)
+  const after = await $.command.run({ command: 'look', args: '' } as never)
+  const anime = await $.command.run({ command: 'look', args: 'anime' } as never)
 
-  expect(before.text).toContain('Animation des scènes : arrêtée')
-  expect(anime.text).toContain('Animation remise.')
+  expect(store.animation).toBe('anime')
+  expect(before.text).toContain('Animation des scènes : en marche')
   expect(fixe.text).toContain('Animation arrêtée.')
-  expect(store.animation).toBe('fixe')
+  expect(after.text).toContain('Animation des scènes : arrêtée')
+  expect(anime.text).toContain('Animation remise.')
+})
+
+test('un /look fixe gardé reste arrêté à la session suivante', async ($, on) => {
+  const store: Record<string, unknown> = { look: 'horizon', animation: 'fixe' }
+  engine(on as On, [], store)
+
+  await $.session.start({ cwd: '/', surface: 'desktop', isInteractive: true })
+  const listing = await $.command.run({ command: 'look', args: '' } as never)
+
+  expect(listing.text).toContain('Animation des scènes : arrêtée')
 })
 
 test('aucun retenu reste sans thème à la session suivante', async ($, on) => {

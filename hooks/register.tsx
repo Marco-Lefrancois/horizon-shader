@@ -20,8 +20,9 @@ import { makeColors } from './make-colors.js'
 // gardé d'une session à l'autre), /look aucun rend le look de l'app.
 const STORE_KEY = 'look'
 const NONE = 'aucun'
-// Animation des scènes : au repos par défaut ;
-// `/look anime` la remet, `/look fixe` l'arrête. Le choix est gardé dans le store.
+// Animation des scènes : en marche par défaut ;
+// `/look fixe` l'arrête, `/look anime` la remet. Le choix est gardé dans le store.
+// « Réduire les animations » du système l'arrête de toute façon (moteur, shader et SVG).
 const ANIM_KEY = 'animation'
 const FIXE = 'fixe'
 const ANIME = 'anime'
@@ -30,7 +31,7 @@ const ANIME = 'anime'
 const freeze = (svg: string): string =>
   svg.replace('</style>', '*{animation:none!important}</style>')
 
-const isAnimated = async ($: EngineInterface): Promise<boolean> => (await $.store.get(ANIM_KEY)) === ANIME
+const isAnimated = async ($: EngineInterface): Promise<boolean> => (await $.store.get(ANIM_KEY)) !== FIXE
 
 // La scène en cours, lue par le hook Backdrop ; posée à chaque application.
 let currentScene: string | undefined

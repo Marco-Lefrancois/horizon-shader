@@ -46,8 +46,8 @@ Au-dessus de l'invite, une **bande de consommation** aux couleurs du thème mont
 ## Commandes
 
 - `/look` : affiche le thème et l'état de l'animation.
-- `/look fixe` : aucun mouvement ; l'état reste lisible par les couleurs et la hauteur du soleil. C'est le réglage par défaut.
-- `/look anime` : remet le mouvement.
+- `/look fixe` : aucun mouvement ; l'état reste lisible par les couleurs et la hauteur du soleil.
+- `/look anime` : remet le mouvement. C'est le réglage par défaut.
 - `/look aucun` : retire le thème ; l'app reprend le sien. `/look horizon` le remet.
 
 Sous « réduire les animations » du système, la scène reste immobile, comme avec `/look fixe`.
