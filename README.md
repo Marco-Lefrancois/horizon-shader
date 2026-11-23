@@ -8,17 +8,24 @@ Un soleil crème au-dessus d'une plaine marine quadrillée, sous un ciel brique,
 
 ## Installer
 
-À l'invite d'une session Claude Code :
+À l'invite d'une session Claude Code, en deux étapes : ajouter le marché, puis installer le plugin.
 
 ```
-/plugin install horizon-shader --marketplace Marco-Lefrancois/horizon-shader
+/plugin marketplace add https://github.com/Marco-Lefrancois/horizon-shader.git
 ```
 
-Répondez `y` pour ajouter le marché, puis choisissez la portée **user** pour que toutes les sessions l'aient. Depuis un shell :
+```
+/plugin install horizon-shader@horizon-shader
+```
+
+Choisissez la portée **user** pour que toutes les sessions l'aient. L'adresse HTTPS évite d'avoir besoin d'une clé SSH GitHub. Depuis un shell :
 
 ```
-claude plugin install horizon-shader --marketplace Marco-Lefrancois/horizon-shader
+claude plugin marketplace add https://github.com/Marco-Lefrancois/horizon-shader.git
+claude plugin install horizon-shader@horizon-shader
 ```
+
+Si l'installation répond `Plugin "horizon-shader" not found in any configured marketplace`, c'est que le marché n'a pas été ajouté : faites d'abord la première étape. Les versions récentes de Claude Code acceptent aussi la forme courte `claude plugin install horizon-shader --marketplace Marco-Lefrancois/horizon-shader`, qui ajoute le marché elle-même.
 
 Ouvrez ensuite une nouvelle session dans l'app de bureau et envoyez un premier message : le thème se pose au démarrage de la session.
 
