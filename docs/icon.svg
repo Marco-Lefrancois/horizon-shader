@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <clipPath id="sun"><circle cx="512" cy="470" r="250"/></clipPath>
+    <clipPath id="plain"><rect x="0" y="640" width="1024" height="384"/></clipPath>
+  </defs>
+  <!-- sky -->
+  <rect width="1024" height="1024" fill="#b84a3a"/>
+  <!-- sun with retro slits, cut by the horizon -->
+  <g clip-path="url(#sun)">
+    <rect x="0" y="0" width="1024" height="640" fill="#efe6d0"/>
+    <rect x="0" y="500" width="1024" height="16" fill="#b84a3a"/>
+    <rect x="0" y="548" width="1024" height="22" fill="#b84a3a"/>
+    <rect x="0" y="600" width="1024" height="28" fill="#b84a3a"/>
+  </g>
+  <!-- plain -->
+  <rect x="0" y="640" width="1024" height="384" fill="#22264a"/>
+  <g clip-path="url(#plain)" stroke="#5a6098" stroke-width="7" fill="none" stroke-linecap="square">
+    <line x1="512" y1="640" x2="-640" y2="1024"/>
+    <line x1="512" y1="640" x2="-256" y2="1024"/>
+    <line x1="512" y1="640" x2="128" y2="1024"/>
+    <line x1="512" y1="640" x2="512" y2="1024"/>
+    <line x1="512" y1="640" x2="896" y2="1024"/>
+    <line x1="512" y1="640" x2="1280" y2="1024"/>
+    <line x1="512" y1="640" x2="1664" y2="1024"/>
+    <line x1="0" y1="664" x2="1024" y2="664"/>
+    <line x1="0" y1="702" x2="1024" y2="702"/>
+    <line x1="0" y1="760" x2="1024" y2="760"/>
+    <line x1="0" y1="846" x2="1024" y2="846"/>
+    <line x1="0" y1="970" x2="1024" y2="970"/>
+  </g>
+  <!-- horizon line -->
+  <rect x="0" y="636" width="1024" height="8" fill="#e07a62"/>
+</svg>
