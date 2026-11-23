@@ -8,26 +8,42 @@ Un soleil crème au-dessus d'une plaine marine quadrillée, sous un ciel brique,
 
 ## Installer
 
-À l'invite d'une session Claude Code, en deux étapes : ajouter le marché, puis installer le plugin.
+Deux étapes : ajouter le marché, puis installer le plugin. L'adresse HTTPS évite d'avoir besoin d'une clé SSH GitHub.
 
 ```
-/plugin marketplace add https://github.com/Marco-Lefrancois/horizon-shader.git
+https://github.com/Marco-Lefrancois/horizon-shader.git
 ```
 
-```
-/plugin install horizon-shader@horizon-shader
-```
+### Dans l'app de bureau
 
-Choisissez la portée **user** pour que toutes les sessions l'aient. L'adresse HTTPS évite d'avoir besoin d'une clé SSH GitHub. Dans l'app de bureau, `/plugin` ouvre l'écran des plug-ins (Paramètres › Personnalisation › Plug-ins) au lieu de répondre dans la conversation : la première commande peut sembler ne rien faire, mais après la seconde, Horizon apparaît sous « Les vôtres ». Depuis un shell :
+1. Ouvrez **Paramètres › Personnalisation › Plug-ins**.
+2. Cliquez sur **+ Ajouter**, choisissez d'ajouter une marketplace et collez l'adresse ci-dessus.
+3. Sous **Les vôtres**, dans « Depuis les marketplaces que vous avez ajoutées », Horizon shader apparaît : installez-le s'il ne l'est pas déjà.
+
+Taper `/plugin marketplace add …` dans une session de l'app ne suffit pas toujours : selon la version, `/plugin` ouvre seulement cet écran, sans exécuter la commande.
+
+### Dans un terminal
 
 ```
 claude plugin marketplace add https://github.com/Marco-Lefrancois/horizon-shader.git
 claude plugin install horizon-shader@horizon-shader
 ```
 
-Si l'installation répond `Plugin "horizon-shader" not found in any configured marketplace`, c'est que le marché n'a pas été ajouté : faites d'abord la première étape. Les versions récentes de Claude Code acceptent aussi la forme courte `claude plugin install horizon-shader --marketplace Marco-Lefrancois/horizon-shader`, qui ajoute le marché elle-même.
+La portée par défaut est **user** : toutes les sessions l'ont. Si l'installation répond `Plugin "horizon-shader" not found in any configured marketplace`, c'est que le marché n'a pas été ajouté : faites d'abord la première commande. Les versions récentes de Claude Code acceptent aussi la forme courte `claude plugin install horizon-shader --marketplace Marco-Lefrancois/horizon-shader`, qui ajoute le marché elle-même.
 
-Ouvrez ensuite une nouvelle session dans l'app de bureau et envoyez un premier message : le thème se pose au démarrage de la session.
+### Ensuite
+
+Quittez complètement l'app de bureau (depuis la zone de notification ; fermer la fenêtre ne suffit pas), rouvrez-la, puis ouvrez une nouvelle session **Code** et envoyez un premier message : le thème se pose au démarrage de la session.
+
+Si un autre plugin dessine déjà une bande de consommation au-dessus de l'invite, vous en verrez deux : désactivez l'un des deux dans l'écran des plug-ins (menu `…`).
+
+### Mettre à jour
+
+```
+claude plugin update horizon-shader@horizon-shader
+```
+
+Puis quittez et rouvrez l'app de bureau.
 
 ## Ce que la scène montre
 
