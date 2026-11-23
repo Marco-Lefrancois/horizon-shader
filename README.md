@@ -4,6 +4,8 @@
 
 Un soleil crème au-dessus d'une plaine marine quadrillée, sous un ciel brique, en formes plates d'esprit sérigraphie rétro. Dans l'app de bureau de Claude Code, un shader redessine la scène et la fait suivre la session : d'un coup d'œil, on voit si Claude travaille, s'il vous attend et où en est le contexte.
 
+![Horizon dans l'app de bureau de Claude Code : soleil crème rayé sur ciel brique, plaine marine quadrillée, et la bande de consommation au-dessus de l'invite](docs/screenshot.png)
+
 ## Installer
 
 À l'invite d'une session Claude Code :
