@@ -1,5 +1,6 @@
 {
   "name": "horizon-shader",
+  "description": "Horizon, an animated Claude Code theme for the desktop app, played by a GPU shader that follows the session.",
   "owner": { "name": "Marco-Lefrancois" },
   "plugins": [{ "name": "horizon-shader", "source": "./" }]
 }
