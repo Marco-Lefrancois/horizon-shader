@@ -18,7 +18,7 @@ Un soleil crème au-dessus d'une plaine marine quadrillée, sous un ciel brique,
 /plugin install horizon-shader@horizon-shader
 ```
 
-Choisissez la portée **user** pour que toutes les sessions l'aient. L'adresse HTTPS évite d'avoir besoin d'une clé SSH GitHub. Depuis un shell :
+Choisissez la portée **user** pour que toutes les sessions l'aient. L'adresse HTTPS évite d'avoir besoin d'une clé SSH GitHub. Dans l'app de bureau, `/plugin` ouvre l'écran des plug-ins (Paramètres › Personnalisation › Plug-ins) au lieu de répondre dans la conversation : la première commande peut sembler ne rien faire, mais après la seconde, Horizon apparaît sous « Les vôtres ». Depuis un shell :
 
 ```
 claude plugin marketplace add https://github.com/Marco-Lefrancois/horizon-shader.git
@@ -54,7 +54,7 @@ Sous « réduire les animations » du système, la scène reste immobile, comme 
 
 ## Où il s'affiche
 
-- **App de bureau** : la scène et le shader. Là où le shader ne joue pas (version plus ancienne, GPU trop faible), la scène SVG fixe s'affiche seule.
+- **App de bureau, onglet Code** : la scène et le shader. Les onglets Conversation et Cowork ne sont pas des sessions Claude Code : le thème ne s'y affiche pas. Là où le shader ne joue pas (version plus ancienne, GPU trop faible), la scène SVG fixe s'affiche seule.
 - **Mobile** : la scène.
 - **Terminal et éditeurs** : pas de fond ; seule la bande de consommation, en blocs de texte. Pour Windows Terminal, `terminal/install-horizon.ps1` ajoute un jeu de couleurs « Horizon » et un profil « Claude · Horizon » (il sauvegarde chaque fichier avant d'écrire ; `-Uninstall` défait tout).
 
