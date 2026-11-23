@@ -1,0 +1,4 @@
+.claude-plugin/types/
+hooks/*.js.map
+.DS_Store
+*.log

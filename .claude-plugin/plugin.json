@@ -1,0 +1,13 @@
+{
+  "name": "horizon-shader",
+  "version": "1.0.0",
+  "description": "Horizon pour Claude Code : un soleil, un ciel brique et une plaine marine, joués par un shader qui suit le travail du modèle, le contexte et le rythme de consommation ; bande de consommation aux couleurs du thème",
+  "license": "MIT",
+  "keywords": [
+    "theme",
+    "backdrop",
+    "shader",
+    "usage"
+  ],
+  "types": "./types/index.d.ts"
+}
