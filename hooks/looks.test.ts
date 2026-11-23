@@ -279,3 +279,104 @@ test('Horizon : un tour fait travailler la plaine, une question allume le phare'
   expect(après.attente).toBe(0)
   expect(après.travail).toBe(1)
 })
+
+// L'état de la session tenu par le banc, et chaque écriture du mod, pour suivre le phare.
+const etatSuivi = (on: On) => {
+  const mem = new Map<string, unknown>()
+  const ecrits: (typeof ETAT0)[] = []
+  let version = 0
+  const valeur = (raw: unknown): typeof ETAT0 =>
+    ((raw !== undefined && raw !== null && typeof raw === 'object' && 'value' in raw ? (raw as { value: unknown }).value : raw) as typeof ETAT0 | undefined) ?? ETAT0
+
+  on('state.get', (_, e) => ({ value: { value: mem.get((e as { key: string }).key), version } }))
+  on('state.set', (_, e) => {
+    const { key, value } = e as { key: string; value: unknown }
+    mem.set(key, value)
+    version += 1
+    if (key === 'vivant') {
+      ecrits.push(valeur(value))
+    }
+
+    return { value: { isSet: true, version } }
+  })
+
+  return { lire: () => valeur(mem.get('vivant')), ecrits }
+}
+
+test('Horizon : un sous-agent en arrière-plan fait défiler la plaine après le tour principal', async ($, on) => {
+  engine(on as On, [], { look: 'horizon' })
+  const etat = etatSuivi(on as On)
+  // Ce que le moteur dit des sous-agents : un en arrière-plan qui tourne encore.
+  let agents = [{ id: 'a1', description: 'fouille', type: 'Explore', status: 'running' }]
+  // Seuls les champs que lit le mod ; les autres du type AgentInfo ne servent pas ici.
+  on('agent.list', () => ({ value: agents as never }))
+  on('turn.start', (_, e) => ({ turnId: e.turnId }))
+  on('turn.complete', () => ({ text: '' }))
+
+  await $.session.start({ cwd: '/', surface: 'desktop', isInteractive: true })
+  await $.turn.start({ text: 'lance la fouille', turnId: 't1' })
+  await $.turn.start({ text: 'fouille', turnId: 's1', agentId: 'a1' } as never)
+  await $.turn.complete({ reason: 'answer' } as never)
+
+  // Le tour principal est fini, le sous-agent travaille encore : la plaine défile, son étoile reste.
+  expect(etat.lire().travail).toBe(1)
+  expect(etat.lire().aides).toBe(1)
+
+  agents = []
+  await $.turn.complete({ reason: 'answer', agentId: 'a1' } as never)
+  expect(etat.lire().travail).toBe(0)
+  expect(etat.lire().aides).toBe(0)
+})
+
+test('Horizon : sans liste des sous-agents, la fin du tour arrête la plaine', async ($, on) => {
+  engine(on as On, [], { look: 'horizon' })
+  const etat = etatSuivi(on as On)
+  on('agent.list', () => {
+    throw new Error('indisponible')
+  })
+  on('turn.start', (_, e) => ({ turnId: e.turnId }))
+  on('turn.complete', () => ({ text: '' }))
+
+  await $.session.start({ cwd: '/', surface: 'desktop', isInteractive: true })
+  await $.turn.start({ text: 'bonjour', turnId: 't1' })
+  await $.turn.start({ text: 'aide', turnId: 's1', agentId: 'a1' } as never)
+  await $.turn.complete({ reason: 'answer' } as never)
+
+  expect(etat.lire().travail).toBe(0)
+  expect(etat.lire().aides).toBe(0)
+})
+
+test('Horizon : une demande d’autorisation allume le phare jusqu’à la réponse', async ($, on) => {
+  engine(on as On, [], { look: 'horizon' })
+  const etat = etatSuivi(on as On)
+  on('turn.start', (_, e) => ({ turnId: e.turnId }))
+  // Le moteur : la règle demande l'avis de la personne, puis l'outil tourne une fois accepté.
+  on('tool.check', () => ({ decision: 'ask' }))
+  on('tool.run', () => ({ result: 'ok' }))
+
+  await $.session.start({ cwd: '/', surface: 'desktop', isInteractive: true })
+  await $.turn.start({ text: 'liste les fichiers', turnId: 't1' })
+  const debut = etat.ecrits.length
+
+  await $.tool.call({ tool: 'Bash', command: 'ls' } as never)
+
+  const pendant = etat.ecrits.slice(debut)
+  expect(pendant.some(s => s.attente === 1 && s.travail === 0)).toBe(true)
+  expect(etat.lire().attente).toBe(0)
+  expect(etat.lire().travail).toBe(1)
+})
+
+test('Horizon : une autorisation refusée éteint le phare', async ($, on) => {
+  engine(on as On, [], { look: 'horizon' })
+  const etat = etatSuivi(on as On)
+  on('turn.start', (_, e) => ({ turnId: e.turnId }))
+  on('tool.check', () => ({ decision: 'ask' }))
+  // La personne refuse : le moteur ne lance pas l'outil.
+  on('tool.run', () => ({ deny: 'refusé par la personne' }))
+
+  await $.session.start({ cwd: '/', surface: 'desktop', isInteractive: true })
+  await $.turn.start({ text: 'pousse', turnId: 't1' })
+  await $.tool.call({ tool: 'Bash', command: 'git push' } as never).catch(() => undefined)
+
+  expect(etat.lire().attente).toBe(0)
+})

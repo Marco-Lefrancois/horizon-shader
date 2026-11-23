@@ -52,8 +52,8 @@ Puis quittez et rouvrez l'app de bureau.
 | Le contexte se remplit | Le soleil descend vers l'horizon, se réchauffe et s'ouvre de fentes ; bandes de couchant et reflet grandissent. Une compaction le fait remonter. |
 | Claude travaille (un tour est en cours) | La plaine défile vers vous et la grille passe au corail. |
 | Un outil tourne | Des éclats clairs descendent les lignes de fuite. |
-| Claude vous attend (une question, un plan à approuver) | La grille s'arrête ; un phare ambre bat lentement au point de fuite. |
-| Des sous-agents travaillent | Une étoile s'allume près du soleil pour chacun, jusqu'à quatre. |
+| Claude vous attend (une question, un plan à approuver, une autorisation à donner) | La grille s'arrête ; un phare ambre bat lentement au point de fuite. |
+| Des sous-agents travaillent | Une étoile s'allume près du soleil pour chacun, jusqu'à quatre. Ceux qui tournent en arrière-plan font encore défiler la plaine après la fin du tour principal. |
 | Le dernier tour a fini sur une erreur | La ligne d'horizon rougit jusqu'au tour suivant. |
 | Vous consommez la fenêtre de 5 h plus vite que le temps passe | Le ciel fonce vers le prune (de 3 à 12 points d'avance). |
 
@@ -80,7 +80,8 @@ Le mod n'envoie au shader que des changements d'état (huit valeurs au plus), ja
 
 ## Limites connues
 
-- Une demande de permission n'allume pas le phare : aucun événement ne la signale à un mod.
+- Le phare d'une demande d'autorisation suit le verdict `ask` du moteur ; en mode auto, le classifieur tranche souvent seul, et le phare ne fait alors que clignoter.
+- Les commandes lancées en arrière-plan (hors sous-agents) ne font pas défiler la plaine : aucun événement ne les signale à un mod.
 - Le soleil touche l'horizon à 100 % du contexte, alors que la compaction automatique arrive en général avant.
 - Un seul thème à la fois : avec un autre mod de thème installé, le dernier posé l'emporte.
 
