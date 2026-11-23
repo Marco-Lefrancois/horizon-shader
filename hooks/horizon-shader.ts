@@ -99,15 +99,22 @@ const view = picture(p => {
     const glow = band < 3 ? (1 - band / 3) * 0.55 * v.contexte : 0
     rgb = mix(rgb, GLOW, glow)
 
-    // Étoiles : une par sous-agent, en haut à gauche du soleil.
+    // Étoiles : une par sous-agent, en arc au-dessus du soleil, du côté droit, loin du voile de la
+    // colonne de conversation. Un cœur de 5 points, quatre branches fines en croix et un halo :
+    // lisibles d'un coup d'œil, même à 125 %.
     for (const i of range(4)) {
-      const sx = w - (330 - i * 52) * k
-      const sy = h - (40 + mod(i, 2) * 46) * k
+      const sx = sunX + (-100 + i * 66) * k
+      const sy = sunHigh + (95 + mod(i, 2) * 30) * k
       const on = smoothstep(i + 0.2, i + 0.8, v.aides)
-      const twinkle = 0.8 + 0.2 * sin(time * (1.3 + i * 0.4) + i) * m
-      const d = length(vec2(at.x - sx, at.y - sy))
-      const star = clamp(2.2 - d, 0, 1) + clamp(1 - d / 9, 0, 1) * 0.25
-      rgb = mix(rgb, SPARK, clamp(star * on * twinkle, 0, 1))
+      const twinkle = 0.75 + 0.25 * sin(time * (1.3 + i * 0.4) + i) * m
+      const dx = abs(at.x - sx)
+      const dy = abs(at.y - sy)
+      const d = length(vec2(dx, dy))
+      const core = clamp(5 - d, 0, 1)
+      const arms = clamp(1.4 - dx, 0, 1) * clamp(1 - dy / 16, 0, 1) + clamp(1.4 - dy, 0, 1) * clamp(1 - dx / 16, 0, 1)
+      const halo = clamp(1 - d / 22, 0, 1) * 0.3
+      const star = clamp(core + arms * 0.9 + halo, 0, 1)
+      rgb = mix(rgb, SPARK, star * on * twinkle)
     }
 
     // Soleil : disque crème qui se réchauffe en descendant ; des fentes s'ouvrent dans sa moitié

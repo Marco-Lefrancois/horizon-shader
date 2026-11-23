@@ -76,7 +76,7 @@ Sous « réduire les animations » du système, la scène reste immobile, comme 
 
 ## Réglages et coût
 
-Le mod n'envoie au shader que des changements d'état (huit valeurs au plus), jamais un flux sur minuterie ; l'app passe d'une valeur à l'autre en douceur. Coût mesuré par `claude plugin validate`, à 30 images par seconde : 1,92 ms par image sur un GPU rapide, 9,96 ms sur un GPU faible.
+Le mod n'envoie au shader que des changements d'état (huit valeurs au plus), jamais un flux sur minuterie ; l'app passe d'une valeur à l'autre en douceur. Coût mesuré par `claude plugin validate`, à 30 images par seconde : 2,09 ms par image sur un GPU rapide, 9,96 ms sur un GPU faible.
 
 ## Limites connues
 
