@@ -57,6 +57,8 @@ Puis quittez et rouvrez l'app de bureau.
 | Le dernier tour a fini sur une erreur | La ligne d'horizon rougit jusqu'au tour suivant. |
 | Vous consommez la fenêtre de 5 h plus vite que le temps passe | Le ciel fonce vers le prune (de 3 à 12 points d'avance). |
 
+Quand Claude te pose une question, un **bandeau « Claude t'attend »** coiffe le formulaire, avec le phare ambre de la scène et le nombre de questions. Il n'habille que le haut : le formulaire lui-même reste celui de Claude Code.
+
 Au-dessus de l'invite, une **bande de consommation** aux couleurs du thème montre les fenêtres de 5 h et de la semaine côte à côte, avec un repère au temps écoulé ; le détail (rythme, projection, réinitialisation) est dans son texte alternatif.
 
 ## Commandes

@@ -176,6 +176,38 @@ test('la bande montre les deux fenêtres au démarrage', async ($, on) => {
   await ui.unmount()
 })
 
+// Le formulaire d'une question : un bandeau Horizon au-dessus, le formulaire du moteur gardé.
+test('question : un bandeau « Claude t’attend » au-dessus du formulaire', async ($, on) => {
+  engine(on as On, [], { look: 'horizon' })
+
+  await $.session.start({ cwd: '/', surface: 'desktop', isInteractive: true })
+  const ui = await $.ui.mount({
+    plugin: 'horizon-shader',
+    component: 'AskUserQuestion',
+    props: { tool: 'AskUserQuestion', questions: [{}, {}] },
+    surface: 'desktop',
+  } as never)
+
+  expect(await ui.find({ type: 'Text', text: 'Claude t\'attend' })).toBeDefined()
+  expect(await ui.find({ type: 'Text', text: /2 questions pour toi/ })).toBeDefined()
+  await ui.unmount()
+})
+
+test('question : sans le look Horizon, le formulaire reste tel quel', async ($, on) => {
+  engine(on as On, [], { look: 'aucun' })
+
+  await $.session.start({ cwd: '/', surface: 'desktop', isInteractive: true })
+  const ui = await $.ui.mount({
+    plugin: 'horizon-shader',
+    component: 'AskUserQuestion',
+    props: { tool: 'AskUserQuestion', questions: [{}] },
+    surface: 'desktop',
+  } as never)
+
+  expect(await ui.find({ type: 'Text', text: 'Claude t\'attend' })).toBeUndefined()
+  await ui.unmount()
+})
+
 // Une seule ligne : les deux fenêtres côte à côte, chacune dans la moitié de la bande.
 test('largeur d’un bloc : la moitié de la bande, au moins 16 cellules', () => {
   expect(halfCells(94, 2)).toBe(44)
