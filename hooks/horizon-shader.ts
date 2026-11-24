@@ -160,11 +160,15 @@ const view = picture(p => {
   const hl = clamp(1.2 - abs(at.y - horizonY), 0, 1)
   rgb = mix(rgb, mix(GRID_LIT, ALARM, v.ennui), hl * (0.35 + 0.65 * v.ennui))
 
-  // Phare d'attente au point de fuite : lent (moins d'un battement par seconde), fixe sans mouvement.
-  const bx = w * VANISH
-  const db = length(vec2(at.x - bx, (at.y - horizonY) * 1.6))
+  // Claude attend : la ligne d'horizon bat en ambre d'un bord à l'autre (visible des deux côtés
+  // de la colonne de conversation), et un phare s'allume au pied du soleil, hors du voile de la
+  // colonne. Lent (moins d'un battement par seconde), fixe sans mouvement.
   const beat = mix(1, 0.55 + 0.45 * sin(time * 2.4), m)
-  const beam = (clamp(4 - db, 0, 1) + clamp(1 - db / 34, 0, 1) * 0.45) * v.attente * beat
+  const ambre = clamp(2.6 - abs(at.y - horizonY), 0, 1)
+  rgb = mix(rgb, BEACON, ambre * v.attente * beat)
+  const bx = sunX
+  const db = length(vec2(at.x - bx, (at.y - horizonY) * 1.6))
+  const beam = (clamp(6.5 - db, 0, 1) + clamp(1 - db / 52, 0, 1) * 0.55) * v.attente * beat
   rgb = mix(rgb, BEACON, clamp(beam, 0, 1))
 
   return vec4(rgb, 1)

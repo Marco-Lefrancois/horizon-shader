@@ -52,7 +52,7 @@ Puis quittez et rouvrez l'app de bureau.
 | Le contexte se remplit | Le soleil descend vers l'horizon, se réchauffe et s'ouvre de fentes ; bandes de couchant et reflet grandissent. Une compaction le fait remonter. |
 | Claude travaille (un tour est en cours) | La plaine défile vers vous et la grille passe au corail. |
 | Un outil tourne | Des éclats clairs descendent les lignes de fuite. |
-| Claude vous attend (une question, un plan à approuver, une autorisation à donner) | La grille s'arrête ; un phare ambre bat lentement au point de fuite. |
+| Claude vous attend (une question, un plan à approuver, une autorisation à donner) | La grille s'arrête ; la ligne d'horizon bat lentement en ambre, et un phare s'allume au pied du soleil. |
 | Des sous-agents travaillent | Une étoile s'allume près du soleil pour chacun, jusqu'à quatre. Ceux qui tournent en arrière-plan font encore défiler la plaine après la fin du tour principal. |
 | Le dernier tour a fini sur une erreur | La ligne d'horizon rougit jusqu'au tour suivant. |
 | Vous consommez la fenêtre de 5 h plus vite que le temps passe | Le ciel fonce vers le prune (de 3 à 12 points d'avance). |
@@ -78,7 +78,7 @@ Sous « réduire les animations » du système, la scène reste immobile, comme 
 
 ## Réglages et coût
 
-Le mod n'envoie au shader que des changements d'état (huit valeurs au plus), jamais un flux sur minuterie ; l'app passe d'une valeur à l'autre en douceur. Coût mesuré par `claude plugin validate`, à 30 images par seconde : 2,09 ms par image sur un GPU rapide, 9,96 ms sur un GPU faible.
+Le mod n'envoie au shader que des changements d'état (huit valeurs au plus), jamais un flux sur minuterie ; l'app passe d'une valeur à l'autre en douceur. Coût mesuré par `claude plugin validate`, à 30 images par seconde : 2,12 ms par image sur un GPU rapide, 9,96 ms sur un GPU faible.
 
 ## Limites connues
 
