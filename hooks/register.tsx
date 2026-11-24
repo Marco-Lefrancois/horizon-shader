@@ -36,6 +36,10 @@ const isAnimated = async ($: EngineInterface): Promise<boolean> => (await $.stor
 // La scène en cours, lue par le hook Backdrop ; posée à chaque application.
 let currentScene: string | undefined
 let currentAlt = ''
+// Couleurs du bandeau des questions : le phare de la scène (#e8b45a), le soleil et le texte
+// atténué de la palette d'Horizon.
+const BANNER = { beacon: '#e8b45a', sun: '#efe6d0', muted: '#a8a08f' } as const
+
 // Le shader du look en cours, s'il en a un (Horizon), et si l'animation est en marche.
 let currentShader: 'horizon' | undefined
 let currentAnimated = false
@@ -163,6 +167,31 @@ export const register: Register = (on, options) => {
     await $.store.set(STORE_KEY, wanted)
 
     return { text: said }
+  })
+
+  // Au-dessus du formulaire d'une question : un bandeau aux couleurs d'Horizon, en écho au phare
+  // de la scène. Le moteur dessine le formulaire lui-même ; on n'ajoute que le haut, jamais rien
+  // en dessous (sa règle). Sans le look Horizon (`/look aucun`), le formulaire reste tel quel.
+  on('ui.render', { component: 'AskUserQuestion' }, async ($, e, next) => {
+    const form = await next(e)
+
+    if ((await read($, lookAtom)) !== 'horizon') {
+      return form
+    }
+    const { Box, Text } = $.ui.resolve(e)
+    const n = Array.isArray(e.props.questions) ? e.props.questions.length : 0
+    const what = n > 1 ? `${n} questions pour toi` : 'une question pour toi'
+
+    return (
+      <Box flexDirection="column">
+        <Box flexDirection="row" columnGap={1} paddingX={1} borderStyle="single" borderColor={BANNER.beacon}>
+          <Text bold color={BANNER.beacon}>◉</Text>
+          <Text bold color={BANNER.sun}>Claude t'attend</Text>
+          <Text color={BANNER.muted}>{`· ${what}, et il repart`}</Text>
+        </Box>
+        {form}
+      </Box>
+    )
   })
 
   on('ui.render', { component: 'Backdrop' }, async ($, e, next) => {
